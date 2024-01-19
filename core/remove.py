@@ -75,9 +75,8 @@ def init_patterns(pattern_file):
     patterns = []
     tmp = []
     for line in pattern_file:
-        if line == EMPTYLINE:
-            continue
-        if ' ' in line:
+        # TODO: make sure the spliter
+        if line == EMPTYLINE or ' ' in line:
             if len(tmp) > 0:
                 patterns.append(tmp)
                 tmp = []
@@ -88,6 +87,8 @@ def init_patterns(pattern_file):
 
 def dedup_patterns(patterns: list):
     res = []
+    if len(patterns) == 0:
+        return res
     sorted_patterns = sorted(patterns, key=len, reverse=False)
     strp = [''.join(p) for p in sorted_patterns]
     lenp = len(sorted_patterns)
